@@ -8,14 +8,23 @@
     <Platforms>x64;x86</Platforms>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="img\HL_M18_04.png" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks.Entypo" Version="4.11.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
     <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
     <PackageReference Include="OSVersionHelper" Version="1.1.24" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CRUDApp.Core\CRUDApp.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\HL_M18_04.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +45,9 @@
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Databases\WPF.mdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>

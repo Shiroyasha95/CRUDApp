@@ -27,6 +27,9 @@ namespace CRUDApp
     {
         private IHost _host;
 
+        public static string role;
+        public static bool authenticated;
+
         public T GetService<T>()
             where T : class
             => _host.Services.GetService(typeof(T)) as T;
@@ -37,6 +40,14 @@ namespace CRUDApp
 
         private async void OnStartup(object sender, StartupEventArgs e)
         {
+            UserLogin login = new UserLogin();
+            login.ShowDialog();
+
+            if (!authenticated)
+            {
+                Application.Current.Shutdown();
+            }
+
             var appLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
             // For more information about .NET generic host see  https://docs.microsoft.com/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-3.0

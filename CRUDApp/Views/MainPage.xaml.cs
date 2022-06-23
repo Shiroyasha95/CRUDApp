@@ -10,6 +10,7 @@ namespace CRUDApp.Views
         {
             InitializeComponent();
             DataContext = viewModel;
+
         }
     }
 }
