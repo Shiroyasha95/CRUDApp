@@ -21,10 +21,22 @@
             Grid.Row="1"
             Margin="{StaticResource MediumLeftRightMargin}"
             Background="{DynamicResource MahApps.Brushes.Gray10}">
+            <Button Content="Create DB" HorizontalAlignment="Left" Margin="31,68,0,0" VerticalAlignment="Top" Click="createDB_Click" Height="28"/>
+            <ListView x:Name="listView" Margin="31,142,466,10" >
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Label Content="Available Databases:" HorizontalAlignment="Left" Margin="31,111,0,0" VerticalAlignment="Top"/>
+            <Label Content="Name:" HorizontalAlignment="Left" Margin="31,16,0,0" VerticalAlignment="Top" Height="21" FontSize="8" Width="32"/>
+            <TextBox Name="nameText" HorizontalAlignment="Left" Margin="63,14,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="107" Height="11" />
             <!--
             The Mahapps Gray10 color represents where you should place your content.
             Place your content here.
             -->
+
         </Grid>
     </Grid>
 </Page>

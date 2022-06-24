@@ -22,6 +22,7 @@ namespace CRUDApp.Views
     public partial class UserLogin : Window
     {
         string roleString;
+        string user;
         bool auth;
         SqlConnection con = new SqlConnection();
         SqlCommand com = new SqlCommand();
@@ -45,6 +46,8 @@ namespace CRUDApp.Views
             {
                 CRUDApp.App.role = roleString;
                 CRUDApp.App.authenticated = auth;
+                CRUDApp.App.user = user;
+
                 MessageBox.Show("Login Successfully", "Congrats", MessageBoxButton.OK, MessageBoxImage.Information);
                 this.Hide();
 
@@ -67,6 +70,7 @@ namespace CRUDApp.Views
                 {
                     roleString = dr["role"].ToString();
                     auth = true;
+                    user = username;
                     return true;
                 }
                 else

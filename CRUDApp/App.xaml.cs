@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
+using System.Configuration;
 
 using CRUDApp.Contracts.Services;
 using CRUDApp.Contracts.Views;
@@ -28,7 +29,15 @@ namespace CRUDApp
         private IHost _host;
 
         public static string role;
+        public static string user;
+
         public static bool authenticated;
+
+        public static Configuration LoadConfig()
+        {
+            Assembly currentAssembly = Assembly.GetCallingAssembly();
+            return System.Configuration.ConfigurationManager.OpenExeConfiguration(currentAssembly.Location);
+        }
 
         public T GetService<T>()
             where T : class
