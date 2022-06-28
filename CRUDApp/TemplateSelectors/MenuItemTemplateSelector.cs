@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-
+using MahApps.Metro.IconPacks;
 using MahApps.Metro.Controls;
 
 namespace CRUDApp.TemplateSelectors
@@ -8,6 +8,8 @@ namespace CRUDApp.TemplateSelectors
     public class MenuItemTemplateSelector : DataTemplateSelector
     {
         public DataTemplate GlyphDataTemplate { get; set; }
+
+        public DataTemplate IconDataTemplate { get; set; }
 
         public DataTemplate ImageDataTemplate { get; set; }
 
@@ -21,6 +23,11 @@ namespace CRUDApp.TemplateSelectors
             if (item is HamburgerMenuImageItem)
             {
                 return ImageDataTemplate;
+            }
+
+            if (item is HamburgerMenuIconItem)
+            {
+                return IconDataTemplate;
             }
 
             return base.SelectTemplate(item, container);

@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
 using System.Configuration;
+using System.Linq;
 
 using CRUDApp.Contracts.Services;
 using CRUDApp.Contracts.Views;
@@ -69,6 +70,7 @@ namespace CRUDApp
                     .Build();
 
             await _host.StartAsync();
+
         }
 
         private void ConfigureServices(HostBuilderContext context, IServiceCollection services)
@@ -94,32 +96,57 @@ namespace CRUDApp
             services.AddSingleton<INavigationService, NavigationService>();
 
             // Views and ViewModels
-            services.AddTransient<IShellWindow, ShellWindow>();
-            services.AddTransient<ShellViewModel>();
+            if (CRUDApp.App.role == "admin")
+            {
+                services.AddTransient<IShellWindow, ShellWindow>();
+                services.AddTransient<ShellViewModel>();
 
-            services.AddTransient<MainViewModel>();
-            services.AddTransient<MainPage>();
+                services.AddTransient<MainViewModel>();
+                services.AddTransient<MainPage>();
 
-            services.AddTransient<ListDetailsViewModel>();
-            services.AddTransient<ListDetailsPage>();
+                services.AddTransient<DataGridViewModel>();
+                services.AddTransient<DataGridPage>();
 
-            services.AddTransient<ContentGridViewModel>();
-            services.AddTransient<ContentGridPage>();
+                //services.AddTransient<ListDetailsViewModel>();
+                //services.AddTransient<ListDetailsPage>();
 
-            services.AddTransient<ContentGridDetailViewModel>();
-            services.AddTransient<ContentGridDetailPage>();
+                //services.AddTransient<ContentGridViewModel>();
+                //services.AddTransient<ContentGridPage>();
 
-            services.AddTransient<DataGridViewModel>();
-            services.AddTransient<DataGridPage>();
+                //services.AddTransient<ContentGridDetailViewModel>();
+                //services.AddTransient<ContentGridDetailPage>();
 
-            services.AddTransient<BlankViewModel>();
-            services.AddTransient<BlankPage>();
+                services.AddTransient<BlankViewModel>();
+                services.AddTransient<BlankPage>();
 
-            services.AddTransient<SettingsViewModel>();
-            services.AddTransient<SettingsPage>();
+                services.AddTransient<SettingsViewModel>();
+                services.AddTransient<SettingsPage>();
 
-            services.AddTransient<IShellDialogWindow, ShellDialogWindow>();
-            services.AddTransient<ShellDialogViewModel>();
+                services.AddTransient<IShellDialogWindow, ShellDialogWindow>();
+                services.AddTransient<IShellDialogWindow, ShellDialogWindowDisplay>();
+
+                services.AddTransient<ShellDialogViewModel>();
+            }
+            else
+            {
+                services.AddTransient<IShellWindow, ShellWindow>();
+                services.AddTransient<ShellViewModel>();
+
+                services.AddTransient<MainViewModel>();
+                services.AddTransient<MainPage>();
+
+                services.AddTransient<DataGridViewModel>();
+                services.AddTransient<DataGridPage>();
+
+                services.AddTransient<SettingsViewModel>();
+                services.AddTransient<SettingsPage>();
+
+                services.AddTransient<IShellDialogWindow, ShellDialogWindow>();
+                services.AddTransient<IShellDialogWindow, ShellDialogWindowDisplay>();
+
+                services.AddTransient<ShellDialogViewModel>();
+            }
+            
 
             // Configuration
             services.Configure<AppConfig>(context.Configuration.GetSection(nameof(AppConfig)));
@@ -130,6 +157,8 @@ namespace CRUDApp
             await _host.StopAsync();
             _host.Dispose();
             _host = null;
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
+            
         }
 
         private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

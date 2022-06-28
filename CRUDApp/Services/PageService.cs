@@ -19,13 +19,22 @@ namespace CRUDApp.Services
         public PageService(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            Configure<MainViewModel, MainPage>();
-            Configure<ListDetailsViewModel, ListDetailsPage>();
-            Configure<ContentGridViewModel, ContentGridPage>();
-            Configure<ContentGridDetailViewModel, ContentGridDetailPage>();
-            Configure<DataGridViewModel, DataGridPage>();
-            Configure<BlankViewModel, BlankPage>();
-            Configure<SettingsViewModel, SettingsPage>();
+            if (CRUDApp.App.role == "admin")
+            {
+                Configure<MainViewModel, MainPage>();
+                //Configure<ListDetailsViewModel, ListDetailsPage>();
+                //Configure<ContentGridViewModel, ContentGridPage>();
+                //Configure<ContentGridDetailViewModel, ContentGridDetailPage>();
+                Configure<DataGridViewModel, DataGridPage>();
+                Configure<BlankViewModel, BlankPage>();
+                Configure<SettingsViewModel, SettingsPage>();
+            } else
+            {
+                Configure<MainViewModel, MainPage>();
+                Configure<DataGridViewModel, DataGridPage>();
+                Configure<SettingsViewModel, SettingsPage>();
+            }
+            
         }
 
         public Type GetPageType(string key)

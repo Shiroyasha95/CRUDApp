@@ -6,7 +6,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:local="clr-namespace:CRUDApp.Views"
         mc:Ignorable="d"
-        ResizeMode="CanMinimize" Title="User Login" Height="450" Width="900" WindowStyle="SingleBorderWindow">
+        ResizeMode="CanMinimize" Title="User Login" Height="460" Width="900" WindowStyle="SingleBorderWindow">
 
 
     <Grid Margin="0,0,0,-14" >

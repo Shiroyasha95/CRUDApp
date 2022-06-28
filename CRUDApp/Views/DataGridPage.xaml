@@ -16,40 +16,19 @@
         <TextBlock
             Style="{StaticResource PageTitleStyle}"
             Margin="{StaticResource MediumLeftMargin}"
-            Text="{x:Static properties:Resources.DataGridPageTitle}" />
-        <Grid Grid.Row="1">
-            <DataGrid
-                AutoGenerateColumns="False"
-                GridLinesVisibility="Horizontal"
-                CanUserAddRows="False"
-                ItemsSource="{Binding Source}"
-                Margin="{StaticResource SmallLeftRightMargin}"
-                KeyboardNavigation.TabNavigation="Once">
-                <DataGrid.Columns>
-                    <!--
-                        TODO:
-                        Remove this column definitions and define columns for your data.
-                        Consider adding header properties to Resources.resw
-                    -->
-                    <DataGridTextColumn Binding="{Binding OrderID}" Header="OrderID" />
-                    <DataGridTextColumn Binding="{Binding OrderDate}" Header="OrderDate" />
-                    <DataGridTextColumn Binding="{Binding Company}" Header="Company" />
-                    <DataGridTextColumn Binding="{Binding ShipTo}" Header="ShipTo" />
-                    <DataGridTextColumn Binding="{Binding OrderTotal}" Header="OrderTotal" />
-                    <DataGridTextColumn Binding="{Binding Status}" Header="Status" />
-                    <DataGridTemplateColumn Header="Symbol">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock
-                                    Margin="{StaticResource SmallLeftRightMargin}"
-                                    HorizontalAlignment="Left"
-                                    Style="{StaticResource SmallIconStyle}"
-                                    Text="{Binding Symbol}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+            Text="CRUD" />
+        <Grid Grid.Row="1" Margin="0,0,0,295" Background="White">
+            <ComboBox x:Name="cbxDatabase" HorizontalAlignment="Left" Margin="52,20,0,0" VerticalAlignment="Top" Width="190" Text="Select Database" IsEditable="True" SelectionChanged="cbxDatabase_SelectionChanged"/>
+            <ComboBox x:Name="cbxTables" HorizontalAlignment="Left" Margin="327,20,0,0" VerticalAlignment="Top" Width="190" Text="Select Table" IsEditable="True" SelectionChanged="cbxTables_SelectionChanged"/>
+            <Button x:Name="btnInsert" Content="INSERT" HorizontalAlignment="Left" Margin="52,70,0,0" VerticalAlignment="Top" Click="btnInsert_Click"/>
+            <Button x:Name="btnUpdate" Content="UPDATE" HorizontalAlignment="Left" Margin="138,70,0,0" VerticalAlignment="Top" Click="btnUpdate_Click"/>
+            <Button x:Name="btnDelete" Content="DELETE" HorizontalAlignment="Left" Margin="225,70,0,0" VerticalAlignment="Top" Click="btnDelete_Click"/>
+
         </Grid>
+        <Grid Grid.Row="1" Margin="0,107,0,0"  Background="White" ClipToBounds="True">
+            <DataGrid Name ="selectedTable" ItemsSource="{Binding}" Margin="22,10,22,10"/>
+
+        </Grid>
+
     </Grid>
 </Page>

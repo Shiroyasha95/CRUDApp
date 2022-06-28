@@ -2,11 +2,11 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
-
 using CRUDApp.Contracts.Services;
 using CRUDApp.Properties;
 
 using MahApps.Metro.Controls;
+using MahApps.Metro.IconPacks;
 
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
@@ -37,14 +37,36 @@ namespace CRUDApp.ViewModels
         }
 
         // TODO: Change the icons and titles for all HamburgerMenuItems here.
-        public ObservableCollection<HamburgerMenuItem> MenuItems { get; } = new ObservableCollection<HamburgerMenuItem>()
+        // Changed to Icon.
+
+        public ObservableCollection<HamburgerMenuItem> MenuItemsAdmin { get; } = new ObservableCollection<HamburgerMenuItem>()
         {
-            new HamburgerMenuGlyphItem() { Label = Resources.ShellMainPage, Glyph = "\uE8A5", TargetPageType = typeof(MainViewModel) },
-            new HamburgerMenuGlyphItem() { Label = Resources.ShellListDetailsPage, Glyph = "\uE8A5", TargetPageType = typeof(ListDetailsViewModel) },
-            new HamburgerMenuGlyphItem() { Label = Resources.ShellContentGridPage, Glyph = "\uE8A5", TargetPageType = typeof(ContentGridViewModel) },
-            new HamburgerMenuGlyphItem() { Label = Resources.ShellDataGridPage, Glyph = "\uE8A5", TargetPageType = typeof(DataGridViewModel) },
-            new HamburgerMenuGlyphItem() { Label = Resources.ShellBlankPage, Glyph = "\uE8A5", TargetPageType = typeof(BlankViewModel) },
+            //var packIconMaterial = new PackIconEntypo()
+            //{
+            //    Kind = PackIconMaterialKind.Cookie,
+            //    Margin = new Thickness(4, 4, 2, 4),
+            //    Width = 24,
+            //    Height = 24,
+            //    VerticalAlignment = VerticalAlignment.Center
+            //};
+            new HamburgerMenuGlyphItem() { Label = "DB Creation", Glyph = "\uF156", TargetPageType = typeof(MainViewModel) },
+            //new HamburgerMenuGlyphItem() { Label = Resources.ShellListDetailsPage, Glyph = "\uE8A5", TargetPageType = typeof(ListDetailsViewModel) },
+            //new HamburgerMenuGlyphItem() { Label = Resources.ShellContentGridPage, Glyph = "\uE8A5", TargetPageType = typeof(ContentGridViewModel) },
+            new HamburgerMenuGlyphItem() { Label = "CRUD", Glyph = "\uF103", TargetPageType = typeof(DataGridViewModel) },
+            new HamburgerMenuGlyphItem() { Label = "Users", Glyph = "\uE716", TargetPageType = typeof(BlankViewModel) },
         };
+
+        public ObservableCollection<HamburgerMenuItem> MenuItemsUser { get; } = new ObservableCollection<HamburgerMenuItem>()
+        {
+           new HamburgerMenuGlyphItem() { Label = "DB Creation", Glyph = "\uF156", TargetPageType = typeof(MainViewModel) },
+            //new HamburgerMenuGlyphItem() { Label = Resources.ShellListDetailsPage, Glyph = "\uE8A5", TargetPageType = typeof(ListDetailsViewModel) },
+            //new HamburgerMenuGlyphItem() { Label = Resources.ShellContentGridPage, Glyph = "\uE8A5", TargetPageType = typeof(ContentGridViewModel) },
+            new HamburgerMenuGlyphItem() { Label = "CRUD", Glyph = "\uF103", TargetPageType = typeof(DataGridViewModel) },
+            //new HamburgerMenuGlyphItem() { Label = "Users", Glyph = "\uE8A5", TargetPageType = typeof(BlankViewModel) },
+        };
+
+        public ObservableCollection<HamburgerMenuItem> _MenuItems;
+        public ObservableCollection<HamburgerMenuItem> MenuItems { get { if (CRUDApp.App.role == "admin") { return MenuItemsAdmin; } else {return MenuItemsUser; } } set { if (CRUDApp.App.role == "admin") { _MenuItems = value; } else { _MenuItems = value; } } }
 
         public ObservableCollection<HamburgerMenuItem> OptionMenuItems { get; } = new ObservableCollection<HamburgerMenuItem>()
         {
@@ -93,14 +115,32 @@ namespace CRUDApp.ViewModels
             if (targetViewModel != null)
             {
                 _navigationService.NavigateTo(targetViewModel.FullName);
+                if (CRUDApp.App.role == "admin")
+                {
+                    this.MenuItems = this.MenuItemsAdmin;
+                }
+                else
+                {
+                    this.MenuItems = this.MenuItemsUser;
+                }
             }
         }
 
         private void OnNavigated(object sender, string viewModelName)
         {
-            var item = MenuItems
+            var item = new HamburgerMenuItem();
+            if (CRUDApp.App.role == "admin")
+            {
+                item = MenuItemsAdmin
                         .OfType<HamburgerMenuItem>()
                         .FirstOrDefault(i => viewModelName == i.TargetPageType?.FullName);
+            } else
+            {
+                item = MenuItemsUser
+                        .OfType<HamburgerMenuItem>()
+                        .FirstOrDefault(i => viewModelName == i.TargetPageType?.FullName);
+            }
+            
             if (item != null)
             {
                 SelectedMenuItem = item;
